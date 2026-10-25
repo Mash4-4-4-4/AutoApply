@@ -6,10 +6,11 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Roles from "./pages/Roles";
 import ResumeStep from "./pages/ResumeStep";
+import Review from "./pages/Review";
 import Dashboard from "./pages/Dashboard";
 
 /** Where a signed-in user should land based on onboarding progress. */
-const home = (step: number) => (step <= 2 ? "/onboarding/roles" : step <= 4 ? "/onboarding/resume" : "/home");
+const home = (step: number) => (step <= 2 ? "/onboarding/roles" : step === 3 ? "/onboarding/resume" : step === 4 ? "/onboarding/review" : "/home");
 
 function Private({ children, minStep = 0, maxStep = 99 }: { children: ReactNode; minStep?: number; maxStep?: number }) {
   const { data: me, isLoading } = useMe();
@@ -33,6 +34,7 @@ export default function App() {
       <Route path="/login" element={<Public><Login /></Public>} />
       <Route path="/onboarding/roles" element={<Private maxStep={4}><Roles /></Private>} />
       <Route path="/onboarding/resume" element={<Private minStep={3} maxStep={4}><ResumeStep /></Private>} />
+      <Route path="/onboarding/review" element={<Private minStep={4} maxStep={4}><Review /></Private>} />
       <Route path="/home" element={<Private minStep={5}><Dashboard /></Private>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

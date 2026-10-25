@@ -6,6 +6,7 @@ import rateLimit from "express-rate-limit";
 import { config } from "./config";
 import authRoutes from "./routes/auth";
 import profileRoutes from "./routes/profile";
+import resumeRoutes from "./routes/resume";
 
 export function createApp() {
   const app = express();
@@ -17,6 +18,7 @@ export function createApp() {
   app.get("/api/health", (_req, res) => res.json({ ok: true }));
   app.use("/api/auth", rateLimit({ windowMs: 15 * 60 * 1000, limit: 60, standardHeaders: true }), authRoutes);
   app.use("/api/profile", profileRoutes);
+  app.use("/api/resume", resumeRoutes);
 
   app.use((_req, res) => res.status(404).json({ error: "Not found" }));
   app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {

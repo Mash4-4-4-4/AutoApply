@@ -39,12 +39,12 @@ export default function Signup() {
     <Shell>
       <StepHeader step={1} />
       <form className="flex flex-1 flex-col px-7" onSubmit={(e) => { e.preventDefault(); next(); }}>
-        <h1 className="mt-12 text-3xl font-bold tracking-tight">{q.title}</h1>
+        <h1 className="mt-12 text-3xl lg:mt-10 font-bold tracking-tight">{q.title}</h1>
         <p className="mt-2 text-ink-soft">{q.prompt}</p>
         <input key={q.field} autoFocus className="input mt-6" type={q.type} placeholder={q.placeholder} autoComplete={q.auto} {...register(q.field)} />
         {err && <p className="mt-2 text-sm text-red-600">{err}</p>}
 
-        <div className="relative mt-auto mb-6 flex flex-col items-center pt-10">
+        <div className="relative mb-6 mt-auto flex flex-col items-center pt-10 lg:mt-8">
           <div className="absolute right-12 top-2 whitespace-pre-line rounded-3xl bg-amber-brand/40 px-5 py-3 text-center text-sm font-medium italic">{q.bubble}</div>
           <div className="h-40 w-40 rounded-full bg-amber-brand/30" />
           <button type="submit" disabled={signup.isPending} aria-label="Continue" className="absolute bottom-0 flex h-16 w-16 items-center justify-center rounded-full bg-amber-brand shadow-card active:scale-95 disabled:opacity-50">

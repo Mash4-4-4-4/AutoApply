@@ -16,9 +16,9 @@ export default function Roles() {
     <Shell>
       <StepHeader step={2} />
       <div className="flex flex-1 flex-col px-7">
-        <h1 className="mt-10 text-3xl font-bold tracking-tight">What are you looking for?</h1>
+        <h1 className="mt-10 text-3xl lg:mt-8 font-bold tracking-tight">What are you looking for?</h1>
         <p className="mt-2 text-ink-soft">Select one or more roles.</p>
-        <div className="mt-6 space-y-3">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
           {ROLES.map((r) => {
             const on = picked.includes(r);
             return (

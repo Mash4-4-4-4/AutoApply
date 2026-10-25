@@ -11,5 +11,8 @@ export const config = {
   port: Number(process.env.PORT ?? 4000),
   mongoUri: process.env.MONGODB_URI ?? "mongodb://127.0.0.1:27017/applypilot",
   jwtSecret,
+  uploadDir: process.env.UPLOAD_DIR ?? "./uploads",
+  aiServiceUrl: process.env.AI_SERVICE_URL ?? "http://localhost:8000",
+  aiServiceToken: process.env.AI_SERVICE_TOKEN ?? "",
   clientOrigin: process.env.CLIENT_ORIGIN ?? "http://localhost:5173",
 };

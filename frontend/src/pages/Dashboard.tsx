@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, ClipboardList, Compass, Home, Plus, User } from "lucide-react";
-import { Shell } from "../components/Shell";
+import { ArrowRight } from "lucide-react";
+import { AppShell } from "../components/Shell";
 import { api } from "../lib/api";
 import { useAuthMutations, useMe } from "../lib/auth";
 
@@ -27,13 +27,14 @@ export default function Dashboard() {
     { n: s.shortlisted, l: "Shortlisted", c: "bg-emerald-100" }, { n: s.needsAttention, l: "Needs Attention", c: "bg-rose-100" },
   ];
   return (
-    <Shell>
-      <div className="flex-1 px-6 pb-28 pt-8">
+    <AppShell onLogout={() => logout.mutate()}>
+      <div className="mx-auto max-w-5xl px-5 pt-8 sm:px-8 lg:pt-10">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Hi, {me?.name}</h1>
-          <button title="Log out" onClick={() => logout.mutate()} className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-brand font-bold">{me?.name?.[0]?.toUpperCase()}</button>
+          <h1 className="text-2xl font-bold lg:text-3xl">Hi, {me?.name}</h1>
+          <button title="Log out" onClick={() => logout.mutate()} className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-brand font-bold lg:hidden">{me?.name?.[0]?.toUpperCase()}</button>
         </div>
-        <div className="mt-6 flex justify-between">
+
+        <div className="mt-6 flex justify-between gap-1 lg:max-w-xl">
           {weekDays().map((d) => (
             <div key={d.label + d.date} className="flex flex-col items-center gap-2 text-xs text-ink-soft">
               {d.label}
@@ -41,37 +42,27 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
+
         <div className="mt-6 flex items-center justify-between text-sm font-medium"><span>Your Progress</span><span className="text-ink-soft">{goal.done}/{goal.total}</span></div>
         <div className="mt-2 h-2 rounded-full bg-cream-300"><div className="h-2 rounded-full bg-amber-brand" style={{ width: `${(goal.done / goal.total) * 100}%` }} /></div>
 
-        <div className="relative mt-5 overflow-hidden rounded-3xl bg-gradient-to-b from-amber-brand to-amber-deep/80 p-5 pb-24 shadow-card">
-          <h2 className="text-xl font-bold">Let's start applying</h2>
-          <p className="mt-1 max-w-[220px] text-sm">We'll find and apply to the best internships for you.</p>
-          <div className="absolute inset-x-0 bottom-0 h-16 rounded-t-[100%] bg-emerald-600/60" />
-          <button aria-label="Start" disabled title="Available in Phase 3" className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white opacity-90"><ArrowRight size={20} /></button>
-        </div>
-
-        <div className="mt-5 grid grid-cols-4 gap-2">
-          {tiles.map((t) => (
-            <div key={t.l} className={`rounded-2xl ${t.c} p-3`}>
-              <div className="text-2xl font-bold">{t.n}</div>
-              <div className="mt-1 text-[11px] leading-tight text-ink-soft">{t.l}</div>
-            </div>
-          ))}
+        <div className="mt-5 grid gap-5 lg:grid-cols-5">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-amber-brand to-amber-deep/80 p-5 pb-24 shadow-card lg:col-span-3 lg:min-h-64 lg:p-8">
+            <h2 className="text-xl font-bold lg:text-2xl">Let's start applying</h2>
+            <p className="mt-1 max-w-[240px] text-sm lg:max-w-sm lg:text-base">We'll find and apply to the best internships for you.</p>
+            <div className="absolute inset-x-0 bottom-0 h-16 rounded-t-[100%] bg-emerald-600/60" />
+            <button aria-label="Start" disabled title="Available in a later phase" className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white opacity-90"><ArrowRight size={20} /></button>
+          </div>
+          <div className="grid grid-cols-4 gap-2 lg:col-span-2 lg:grid-cols-2 lg:gap-3">
+            {tiles.map((t) => (
+              <div key={t.l} className={`rounded-2xl ${t.c} p-3 lg:p-5`}>
+                <div className="text-2xl font-bold lg:text-4xl">{t.n}</div>
+                <div className="mt-1 text-[11px] leading-tight text-ink-soft lg:text-sm">{t.l}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      <nav className="absolute inset-x-0 bottom-0 flex items-center justify-around rounded-b-none bg-white/90 px-4 pb-5 pt-3 backdrop-blur sm:rounded-b-4xl">
-        <NavItem icon={<Home size={22} />} label="Home" active />
-        <NavItem icon={<Compass size={22} />} label="Explore" />
-        <button disabled aria-label="Add" className="-mt-8 flex h-14 w-14 items-center justify-center rounded-full bg-amber-brand shadow-card"><Plus /></button>
-        <NavItem icon={<ClipboardList size={22} />} label="Applications" />
-        <NavItem icon={<User size={22} />} label="Profile" />
-      </nav>
-    </Shell>
+    </AppShell>
   );
-}
-
-function NavItem({ icon, label, active }: { icon: React.ReactNode; label: string; active?: boolean }) {
-  return <div className={`flex flex-col items-center gap-1 text-[11px] ${active ? "text-ink font-semibold" : "text-ink-faint"}`}>{icon}{label}</div>;
 }

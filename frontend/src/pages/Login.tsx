@@ -9,7 +9,7 @@ export default function Login() {
   const { register, handleSubmit } = useForm<{ email: string; password: string }>();
   return (
     <Shell>
-      <form className="flex flex-1 flex-col px-7 pt-20" onSubmit={handleSubmit((v) => login.mutate(v, { onSuccess: () => nav("/home") }))}>
+      <form className="flex flex-1 flex-col px-7 pt-20 lg:pt-0" onSubmit={handleSubmit((v) => login.mutate(v, { onSuccess: () => nav("/home") }))}>
         <h1 className="text-3xl font-bold tracking-tight">Welcome back</h1>
         <p className="mt-2 text-ink-soft">Log in to continue applying.</p>
         <input className="input mt-8" type="email" placeholder="Email" autoComplete="email" {...register("email", { required: true })} />
